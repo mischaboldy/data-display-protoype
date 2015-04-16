@@ -2,7 +2,8 @@
 angular.module('DataDisplayPrototypeApp', [
     'ngAnimate',
     'ngResource',
-    'ngRoute'
+    'ngRoute',
+    'chart.js'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -10,9 +11,9 @@ angular.module('DataDisplayPrototypeApp', [
         templateUrl: 'views/pages/main.html',
         controller: 'MainCtrl'
       })
-      .when('/notsureyet', {
-        templateUrl: 'views/pages/notsureyet.html',
-        controller: 'AboutCtrl'
+      .when('/chart-test', {
+        templateUrl: 'views/pages/chart-test.html',
+        controller: 'ChartCtrl'
       })
       .otherwise({
         redirectTo: '/'
