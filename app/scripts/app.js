@@ -3,8 +3,7 @@ angular.module('DataDisplayPrototypeApp', [
     'ngAnimate',
     'ngResource',
     'ngRoute',
-    'chart.js',
-    'firebase'
+    'chart.js'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -14,11 +13,11 @@ angular.module('DataDisplayPrototypeApp', [
       })
       .when('/chart-test', {
         templateUrl: 'views/pages/chart-test.html',
-        controller: 'ChartCtrl'
+        controller: 'ChartController'
       })
       .when('/firebase-test', {
         templateUrl: 'views/pages/firebase-test.html',
-        controller: 'firebaseCtrl'
+        controller: 'FirebaseController'
       })
       .otherwise({
         redirectTo: '/'

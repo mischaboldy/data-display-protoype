@@ -1,6 +1,6 @@
 'use strict';
 angular.module('DataDisplayPrototypeApp')
-  .controller('ChartCtrl', function ($scope) {
+  .controller('ChartController', function ($scope) {
 
     $scope.randomize = function () {
       var count;

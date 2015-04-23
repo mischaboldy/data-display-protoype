@@ -68,24 +68,41 @@ body {
 }
 
 /* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
+.container {
+  max-width: 800px;
+}
 
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
+/* Remove the padding we set earlier */
+.header,
+.marketing,
+.footer {
+  padding-left: 0;
+  padding-right: 0;
+}
+/* Space out the masthead */
+.header {
+  margin-bottom: 30px;
+}
+/* Remove the bottom border on the jumbotron for visual effect */
+.jumbotron {
+  border-bottom: 0;
+}
+
+.options,
+.totals {
+  width: 200px;
+  height: 400px;
+  border-radius: 5px;
+}
+
+.totals {
+  background-color: rgba(79,235,40,0.3);
+  float: right;
+  margin-right: 20px;
+}
+
+.options {
+  background-color: rgba(79,235,40,0);
+  float: left;
+  margin-left: 20px;
 }
