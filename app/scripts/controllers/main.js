@@ -14,9 +14,9 @@ angular.module('DataDisplayPrototypeApp')
     var randomArray9;
     var randomArray10;
     $scope.charttype = "lineChart"
-
     $scope.labels = [];
     $scope.allData = [];
+    $scope.series = [];
     $scope.dataDisplayModel = [{
         name : "active users",
         checked : true
@@ -49,18 +49,6 @@ angular.module('DataDisplayPrototypeApp')
         checked : false
     }];
 
-    // {
-    //   checked : true,
-    //   value2 : false,
-    //   value3 : false,
-    //   value4 : false,
-    //   value5 : false,
-    //   value6 : false,
-    //   value7 : false,
-    //   value8 : false,
-    //   value9 : false,
-    //   value10 : false
-    // };
     $scope.interval = [{
         name : "day",
         checked : true
@@ -82,17 +70,13 @@ angular.module('DataDisplayPrototypeApp')
         checked : false
       }];
 
+    $scope.dataDifferenceArray = []
 
-    $scope.getPartial = function () {
-      var x  = 'views/partials/' + $scope.charttype + '.html'
-      console.log(x)
-      return 'views/partials/' + $scope.charttype + '.html'
-    }
     $scope.buildChart = function () {
       $scope.getChart();
       $scope.getData();
       $scope.getLabels();
-      $scope.getPartial();
+      $scope.getDifferences();
     }
 
     $scope.getChart = function() {
@@ -118,7 +102,6 @@ angular.module('DataDisplayPrototypeApp')
       var x4 = $scope.dataDisplayModel[9].checked;
       $scope.allData = [];
       $scope.series = [];
-
       if (users === true) {
         $scope.allData.push(randomArray1);
         $scope.series.push("users");
@@ -163,9 +146,9 @@ angular.module('DataDisplayPrototypeApp')
       // console.log($scope.allData)
       // if (users === false && activeUsers === false && tennants === false) {
       // }
-
     }
-
+          // startData : $scope.allData[i][0],
+          // endData : $scope.allData[i][$scope.allData.length-1],
     $scope.randomArray = function() {
       var array = [];
 
@@ -247,8 +230,27 @@ angular.module('DataDisplayPrototypeApp')
       randomArray10 = $scope.randomArray();
     }
 
+    $scope.getDifferences = function () {
+
+      $scope.dataDifferenceArray.length = 0;
+      var i;
+      for (i = 0; i < $scope.allData.length ;i++) {
+        $scope.dataDifferenceArray.push({
+          name : $scope.series[i],
+          startData : $scope.allData[i][0],
+          endData : $scope.allData[i][$scope.labels.length-1],
+          differenceData : $scope.allData[i][$scope.labels.length-1] - $scope.allData[i][0]
+        })
+      }
+      console.log($scope.dataDifferenceArray)
+    }
+
+
 
     $scope.setStartDates();
     $scope.setArrays();
     $scope.buildChart();
   });
+
+
+/// word search!!

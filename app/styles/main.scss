@@ -89,34 +89,33 @@ body {
 }
 
 .totals {
-  width: 200px;
-  height: 400px;
+  background-color: rgba(79,235,40,0.2);
+  float: right;
+  margin-right: 20px;
+  height: auto;
+  padding: 1em;
   border-radius: 5px;
 }
 
-.totals {
-  background-color: rgba(79,235,40,0.3);
-  float: right;
-  margin-right: 20px;
-}
-
-// .options {
-//   background-color: rgba(79,235,40,0);
-//   float: left;
-//   margin-left: 20px;
-// }
-
-
 .interval {
   float: left;
-  margin-right: 2em;
+  margin-right: 1em;
 }
 
 .options {
+  background-color: rgba(79,235,40,0.2);
+  float: left;
+  margin-right: 20px;
+  height: auto;
+  width: 315px;
+  padding: 1em;
+  border-radius: 5px;
+
+}
+.selectors {
   height: 250px;
   width: 400px;
 }
-
 .button {
   margin: 1em 1em 1em 0em;
 }
