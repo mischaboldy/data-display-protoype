@@ -13,21 +13,54 @@ angular.module('DataDisplayPrototypeApp')
     var randomArray8;
     var randomArray9;
     var randomArray10;
+    $scope.charttype = "lineChart"
 
     $scope.labels = [];
     $scope.allData = [];
-    $scope.dataDisplayModel = {
-      value1 : true,
-      value2 : false,
-      value3 : false,
-      value4 : false,
-      value5 : false,
-      value6 : false,
-      value7 : false,
-      value8 : false,
-      value9 : false,
-      value10 : false
-    };
+    $scope.dataDisplayModel = [{
+        name : "active users",
+        checked : true
+      }, {
+        name : "tennants",
+        checked : false
+      }, {
+        name : "completions",
+        checked : false
+      }, {
+        name : "paths",
+        checked : false
+      }, {
+        name : "chapters",
+        checked : false
+      }, {
+        name : "x",
+        checked : false
+      }, {
+        name : "x",
+        checked : false
+      }, {
+        name : "x",
+        checked : false
+      }, {
+        name : "x",
+        checked : false
+      }, {
+        name : "x",
+        checked : false
+    }];
+
+    // {
+    //   checked : true,
+    //   value2 : false,
+    //   value3 : false,
+    //   value4 : false,
+    //   value5 : false,
+    //   value6 : false,
+    //   value7 : false,
+    //   value8 : false,
+    //   value9 : false,
+    //   value10 : false
+    // };
     $scope.interval = [{
         name : "day",
         checked : true
@@ -37,26 +70,52 @@ angular.module('DataDisplayPrototypeApp')
       }, {
         name : "year",
         checked : false
-    }]
+    }];
 
+    $scope.chartstype = [{
+        name : 'line chart',
+        partial : 'lineChart',
+        checked : true
+      }, {
+        name : 'bar chart',
+        partial : 'barChart',
+        checked : false
+      }];
+
+
+    $scope.getPartial = function () {
+      var x  = 'views/partials/' + $scope.charttype + '.html'
+      console.log(x)
+      return 'views/partials/' + $scope.charttype + '.html'
+    }
     $scope.buildChart = function () {
+      $scope.getChart();
       $scope.getData();
       $scope.getLabels();
+      $scope.getPartial();
+    }
 
+    $scope.getChart = function() {
+      if ($scope.chartstype[0].checked) {
+        $scope.charttype = $scope.chartstype[0].partial
+      }
+      if ($scope.chartstype[1].checked) {
+        $scope.charttype = $scope.chartstype[1].partial
+      }
     }
 
     $scope.getData = function() {
 
-      var users = $scope.dataDisplayModel.value1;
-      var activeUsers = $scope.dataDisplayModel.value2;
-      var tennants = $scope.dataDisplayModel.value3;
-      var completions = $scope.dataDisplayModel.value4;
-      var paths = $scope.dataDisplayModel.value5;
-      var chapters = $scope.dataDisplayModel.value6;
-      var x1 = $scope.dataDisplayModel.value7;
-      var x2 = $scope.dataDisplayModel.value8;
-      var x3 = $scope.dataDisplayModel.value9;
-      var x4 = $scope.dataDisplayModel.value10;
+      var users = $scope.dataDisplayModel[0].checked;
+      var activeUsers = $scope.dataDisplayModel[1].checked;
+      var tennants = $scope.dataDisplayModel[2].checked;
+      var completions = $scope.dataDisplayModel[3].checked;
+      var paths = $scope.dataDisplayModel[4].checked;
+      var chapters = $scope.dataDisplayModel[5].checked;
+      var x1 = $scope.dataDisplayModel[6].checked;
+      var x2 = $scope.dataDisplayModel[7].checked;
+      var x3 = $scope.dataDisplayModel[8].checked;
+      var x4 = $scope.dataDisplayModel[9].checked;
       $scope.allData = [];
       $scope.series = [];
 

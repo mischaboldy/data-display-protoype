@@ -88,7 +88,6 @@ body {
   border-bottom: 0;
 }
 
-.options,
 .totals {
   width: 200px;
   height: 400px;
@@ -101,8 +100,23 @@ body {
   margin-right: 20px;
 }
 
-.options {
-  background-color: rgba(79,235,40,0);
+// .options {
+//   background-color: rgba(79,235,40,0);
+//   float: left;
+//   margin-left: 20px;
+// }
+
+
+.interval {
   float: left;
-  margin-left: 20px;
+  margin-right: 2em;
+}
+
+.options {
+  height: 250px;
+  width: 400px;
+}
+
+.button {
+  margin: 1em 1em 1em 0em;
 }

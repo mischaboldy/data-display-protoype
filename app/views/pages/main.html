@@ -1,38 +1,44 @@
-<input type="checkbox" ng-model="dataDisplayModel.value1">users</input>
-<input type="checkbox" ng-model="dataDisplayModel.value2">active users</input>
-<input type="checkbox" ng-model="dataDisplayModel.value3">tennants</input>
-<input type="checkbox" ng-model="dataDisplayModel.value4">completions</input>
-<input type="checkbox" ng-model="dataDisplayModel.value5">paths</input>
-<input type="checkbox" ng-model="dataDisplayModel.value6">chapters</input>
-<input type="checkbox" ng-model="dataDisplayModel.value7">tennants</input>
-<input type="checkbox" ng-model="dataDisplayModel.value8">tennants</input>
-<input type="checkbox" ng-model="dataDisplayModel.value9">tennants</input>
-<input type="checkbox" ng-model="dataDisplayModel.value10">tennants</input>
+<div class="options">
+  <div class="interval">
+    <table>
+      <thead> select data: </thead>
+      <tr ng-repeat="value in dataDisplayModel">
+        <td>
+          <input type="checkbox" ng-model="value.checked">{{value.name}}</input>
+        </td>
+      </tr>
+    </table>
+  </div>
 
+  <div class="interval">
+    <table>
+      <thead> select interval: </thead>
+      <tr ng-repeat="type in interval">
+        <td>
+          <input type="checkbox" ng-model="type.checked" ng-click="switch($index, interval)">per {{type.name}} </input>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div>
+    <table>
+      <thead> select type: </thead>
+      <tr ng-repeat="type in chartstype">
+        <td>
+          <input type="checkbox" ng-model="type.checked" ng-click="switch($index, chartstype)">{{type.name}} </input>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+from date:
 <input type="date" placeholder="from date" ng-model="fromDate"></input>
+
+to date:
 <input type="date" placeholder="to date" ng-model="toDate"></input></br>
-<!-- <button ng-click="setInterval('days')"> per day </button>
-<button ng-click="setInterval('months')"> per month </button>
-<button ng-click="setInterval('years')"> per year </button><br/> -->
-<table>
-  <tr ng-repeat="type in interval">
-    <td>
-      <input type="checkbox" ng-model="type.checked" ng-click="switch($index, interval)">per {{type.name}} </input>
-    </td>
-  </tr>
-</table>
 
-<!-- <input type="checkbox" ng-change="switch('month')" ng-model="interval.checked">per month </input>
-<input type="checkbox" ng-change="switch('year')" ng-model="interval.checked">per year </input><br/> -->
+<button class="button" ng-click="buildChart()">show me the data</button><br/>
 
-<button ng-click="buildChart()">show me the data</button><br/>
-
-
-
-<canvas id="bar" class="chart chart-bar" data="allData"
-  labels="labels"></canvas>
-
-<canvas id="line" class="chart chart-line" data="allData"
-  labels="labels" legend="true" series="series">
-</canvas>
-
+<chart type="{{charttype}}"></chart>

@@ -1,6 +1,18 @@
 'use strict';
 angular.module('DataDisplayPrototypeApp')
-  .directive("leftsidebar", function () {
+  .directive("chart", function () {
+
+    return {
+      restrict: 'E',
+      link: function (scope, element, attrs) {
+        scope.getContentUrl = function () {
+          return 'views/partials/' + attrs.type + '.html';
+        }
+      },
+      template: '<div ng-include="getContentUrl()"></div>'
+    }
+
+  }).directive("leftsidebar", function () {
 
     return {
       restrict: 'E',
