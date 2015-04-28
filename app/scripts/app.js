@@ -23,6 +23,18 @@ angular.module('DataDisplayPrototypeApp', [
         templateUrl: 'views/pages/search.html',
         controller: 'SearchController'
       })
+      .when('/users', {
+        templateUrl: 'views/pages/users.html',
+        controller: 'usersController'
+      })
+      .when('/tennants', {
+        templateUrl: 'views/pages/tennants.html',
+        controller: 'tennantsController'
+      })
+      .when('/spaces', {
+        templateUrl: 'views/pages/spaces.html',
+        controller: 'spacesController'
+      })
       .otherwise({
         redirectTo: '/'
       });

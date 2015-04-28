@@ -18,10 +18,13 @@ angular.module('DataDisplayPrototypeApp')
     $scope.allData = [];
     $scope.series = [];
     $scope.dataDisplayModel = [{
-        name : "active users",
+        name : "users",
         checked : true
       }, {
-        name : "tennants",
+        name : "active users",
+        checked : false
+      }, {
+        name : "super users",
         checked : false
       }, {
         name : "completions",
@@ -33,19 +36,7 @@ angular.module('DataDisplayPrototypeApp')
         name : "chapters",
         checked : false
       }, {
-        name : "x",
-        checked : false
-      }, {
-        name : "x",
-        checked : false
-      }, {
-        name : "x",
-        checked : false
-      }, {
-        name : "x",
-        checked : false
-      }, {
-        name : "x",
+        name : "tennants",
         checked : false
     }];
 
@@ -96,10 +87,7 @@ angular.module('DataDisplayPrototypeApp')
       var completions = $scope.dataDisplayModel[3].checked;
       var paths = $scope.dataDisplayModel[4].checked;
       var chapters = $scope.dataDisplayModel[5].checked;
-      var x1 = $scope.dataDisplayModel[6].checked;
-      var x2 = $scope.dataDisplayModel[7].checked;
-      var x3 = $scope.dataDisplayModel[8].checked;
-      var x4 = $scope.dataDisplayModel[9].checked;
+      var superUsers = $scope.dataDisplayModel[6].checked;
       $scope.allData = [];
       $scope.series = [];
       if (users === true) {
@@ -126,29 +114,12 @@ angular.module('DataDisplayPrototypeApp')
         $scope.allData.push(randomArray6);
         $scope.series.push("chapters");
       }
-      if (x1 === true) {
+      if (superUsers === true) {
         $scope.allData.push(randomArray7);
-        $scope.series.push("x1");
+        $scope.series.push("super users");
       }
-      if (x2 === true) {
-        $scope.allData.push(randomArray8);
-        $scope.series.push("x2");
-      }
-      if (x3 === true) {
-        $scope.allData.push(randomArray9);
-        $scope.series.push("x3");
-      }
-      if (x4 === true) {
-        $scope.allData.push(randomArray10);
-        $scope.series.push("x4");
-      }
-
-      // console.log($scope.allData)
-      // if (users === false && activeUsers === false && tennants === false) {
-      // }
     }
-          // startData : $scope.allData[i][0],
-          // endData : $scope.allData[i][$scope.allData.length-1],
+
     $scope.randomArray = function() {
       var array = [];
 
@@ -225,9 +196,6 @@ angular.module('DataDisplayPrototypeApp')
       randomArray5 = $scope.randomArray();
       randomArray6 = $scope.randomArray();
       randomArray7 = $scope.randomArray();
-      randomArray8 = $scope.randomArray();
-      randomArray9 = $scope.randomArray();
-      randomArray10 = $scope.randomArray();
     }
 
     $scope.getDifferences = function () {
