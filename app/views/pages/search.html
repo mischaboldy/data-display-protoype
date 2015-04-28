@@ -1,0 +1,32 @@
+<div class="container">
+  Search Learning Spaces for:
+  <input type="text" ng-model="term" placeholder="enter search term"></input>
+  <button ng-click="findTerm()">find</button>
+
+  <div ng-hide="outputHide">
+    <p>The results for your search has yielded:</p>
+
+    <table class="tftable" border="1">
+      <tr>
+        <th>Term <span class="topscript">1</span></th>
+        <th>count <span class="topscript">2</span></th>
+        <th>quiz count <span class="topscript">3</span></th>
+        <th>Spaces <span class="topscript">4</span></th>
+        <th>Chapters <span class="topscript">5</span></th>
+      </tr>
+      <tr ng-repeat="data in searchModel">
+        <td>{{data.term}}</td>
+        <td>{{data.count}}</td>
+        <td>{{data.quizesCount}}</td>
+        <td>{{data.spacesCount}}</td>
+        <td>{{data.chapterCount}}</td>
+      </tr>
+    </table><br/>
+
+  <span class="topscript">1 = search term </span><br/>
+  <span class="topscript">2 = amount of times found in Learning Spaces content </span><br/>
+  <span class="topscript">3 = amount of Quizes in which the term is used</span><br/>
+  <span class="topscript">4 = amount of Spaces in which the term is used </span><br/>
+  <span class="topscript">5 = amount of Chapters in which the term is used </span><br/>
+  </div>
+</div>

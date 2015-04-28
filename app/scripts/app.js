@@ -19,6 +19,10 @@ angular.module('DataDisplayPrototypeApp', [
         templateUrl: 'views/pages/firebase-test.html',
         controller: 'FirebaseController'
       })
+      .when('/search', {
+        templateUrl: 'views/pages/search.html',
+        controller: 'SearchController'
+      })
       .otherwise({
         redirectTo: '/'
       });

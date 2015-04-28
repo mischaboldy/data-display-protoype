@@ -45,6 +45,7 @@ body {
 
 .container-narrow > hr {
   margin: 30px 0;
+  max-width: 740px;
 }
 
 /* Main marketing message and sign up button */
@@ -112,10 +113,35 @@ body {
   border-radius: 5px;
 
 }
+
 .selectors {
   height: 250px;
   width: 400px;
 }
+
 .button {
   margin: 1em 1em 1em 0em;
+}
+
+.tftable {
+  width:100%;
+
+  td {
+    font-size:12px;
+    padding: 8px;
+  }
+
+  th {
+    font-size:12px;
+    padding: 8px;
+  }
+}
+
+.topscript{
+  font-size: 10px;
+  vertical-align: super;
+}
+
+.chart {
+  max-width: 740px;
 }

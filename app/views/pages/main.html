@@ -8,21 +8,15 @@
   <p>all chapters: {{totalChapters}} </p><br/>
 
   <h3>Differences</h3><br/>
-  <style type="text/css">
-        .tftable {width:100%;}
-        .tftable td {font-size:12px;padding: 8px;}
-        .tftable th {font-size:12px;padding: 8px;}
-      </style>
-
-      <table class="tftable" border="1">
-        <tr><th>Data</th><th>Start date</th><th>End date</th><th>Difference</th></tr>
-        <tr ng-repeat="data in dataDifferenceArray">
-          <td>{{data.name}}</td>
-          <td>{{data.startData}}</td>
-          <td>{{data.endData}}</td>
-          <td>{{data.differenceData}}</td>
-        </tr>
-      </table>
+    <table class="tftable" border="1">
+      <tr><th>Data</th><th>Start date</th><th>End date</th><th>Difference</th></tr>
+      <tr ng-repeat="data in dataDifferenceArray">
+        <td>{{data.name}}</td>
+        <td>{{data.startData}}</td>
+        <td>{{data.endData}}</td>
+        <td>{{data.differenceData}}</td>
+      </tr>
+    </table>
 </div>
 
 <div class="options">
