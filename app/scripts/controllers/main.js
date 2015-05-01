@@ -1,53 +1,83 @@
 'use strict';
 angular.module('DataDisplayPrototypeApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('MainCtrl', function ($scope, dataService, $filter) {
+
+    $scope.dataList = dataService.getData()
+
+    console.log($scope.dataList)
 
 
-    var randomArray1;
-    var randomArray2;
-    var randomArray3;
-    var randomArray4;
-    var randomArray5;
-    var randomArray6;
-    var randomArray7;
-    var randomArray8;
-    var randomArray9;
-    var randomArray10;
+    $scope.getTotals = function (key) {
+      var i;
+      var total = 0;
+
+      for (i = 0 ; i < $scope.dataList.values.length ; i++) {
+        if ($scope.dataList.values[i][6] === "2015-04-29 00:00:00") {
+          total += parseInt($scope.dataList.values[i][key])
+        }
+      }
+      return total;
+    }
+
+    $scope.getTennants = function () {
+      var i;
+      var total = 0;
+
+      for (i = 0 ; i < $scope.dataList.values.length ; i++) {
+        if ($scope.dataList.values[i][6] === "2015-04-29 00:00:00") {
+          total += 1
+        }
+      }
+      return total;
+    }
+
+    $scope.totalUsers = $scope.getTotals(1);
+    $scope.totalTennants = $scope.getTennants();
+    $scope.totalSpaces = $scope.getTotals(2);
+    $scope.totalCompletions = $scope.getTotals(3);
+    $scope.totalChapters = $scope.getTotals(5);
+
     $scope.charttype = "lineChart"
     $scope.labels = [];
     $scope.allData = [];
     $scope.series = [];
+
     $scope.dataDisplayModel = [{
         name : "users",
+        field : "users",
         checked : true
       }, {
         name : "active users",
-        checked : false
-      }, {
-        name : "super users",
+        field : "active_users",
         checked : false
       }, {
         name : "completions",
+        field : "completions",
         checked : false
       }, {
-        name : "paths",
+        name : "spaces",
+        field : "spaces",
         checked : false
       }, {
         name : "chapters",
-        checked : false
-      }, {
-        name : "tennants",
+        field : "chapters",
         checked : false
     }];
 
     $scope.interval = [{
         name : "day",
+        action : "Date",
+        format : [true, true, false],
         checked : true
       }, {
         name : "month",
+        action : "Month",
+        format : [true, false, false],
         checked : false
       }, {
         name : "year",
+        action : "FullYear",
+        format : [false, false, false],
         checked : false
     }];
 
@@ -61,12 +91,12 @@ angular.module('DataDisplayPrototypeApp')
         checked : false
       }];
 
-    $scope.dataDifferenceArray = []
-
     $scope.buildChart = function () {
+      var interval = _.result(_.find($scope.interval, { 'checked' : true }) , 'action')
+      var format = _.result(_.find($scope.interval, { 'checked' : true }) , 'format')
       $scope.getChart();
-      $scope.getData();
-      $scope.getLabels();
+      $scope.getData($scope.fromDate, $scope.toDate, interval, [true, true, true]);
+      $scope.getLabels($scope.fromDate, $scope.toDate, interval, format);
       $scope.getDifferences();
     }
 
@@ -79,107 +109,50 @@ angular.module('DataDisplayPrototypeApp')
       }
     }
 
-    $scope.getData = function() {
+    $scope.getData = function(startDate, endDate, interval, format) {
 
-      var users = $scope.dataDisplayModel[0].checked;
-      var activeUsers = $scope.dataDisplayModel[1].checked;
-      var tennants = $scope.dataDisplayModel[2].checked;
-      var completions = $scope.dataDisplayModel[3].checked;
-      var paths = $scope.dataDisplayModel[4].checked;
-      var chapters = $scope.dataDisplayModel[5].checked;
-      var superUsers = $scope.dataDisplayModel[6].checked;
-      $scope.allData = [];
-      $scope.series = [];
-      if (users === true) {
-        $scope.allData.push(randomArray1);
-        $scope.series.push("users");
-      }
-      if (activeUsers === true) {
-        $scope.allData.push(randomArray2);
-        $scope.series.push("activeUsers");
-      }
-      if (tennants === true) {
-        $scope.allData.push(randomArray3);
-        $scope.series.push("tennants");
-      }
-      if (completions === true) {
-        $scope.allData.push(randomArray4);
-        $scope.series.push("completions");
-      }
-      if (paths === true) {
-        $scope.allData.push(randomArray5);
-        $scope.series.push("paths");
-      }
-      if (chapters === true) {
-        $scope.allData.push(randomArray6);
-        $scope.series.push("chapters");
-      }
-      if (superUsers === true) {
-        $scope.allData.push(randomArray7);
-        $scope.series.push("super users");
+      $scope.series.length = 0
+      $scope.allData.length = 0
+
+      var dateArray = $scope.getDates(startDate, endDate, interval, format);
+
+      for (var i = 0 ; i < $scope.dataDisplayModel.length ; i++) {
+
+        if ($scope.dataDisplayModel[i].checked === true) {
+          var field = $scope.dataList.fields.indexOf($scope.dataDisplayModel[i].field)
+
+          var dataArray = [];
+
+          for (var j = 0 ; j < dateArray.length ; j++) {
+            var arrayList = $filter('filter')($scope.dataList.values, dateArray[j], true);
+            var sum = _.sum(arrayList, field);
+            dataArray.push(sum);
+          }
+          $scope.allData.push(dataArray);
+          $scope.series.push($scope.dataDisplayModel[i].name);
+        }
       }
     }
 
-    $scope.randomArray = function() {
-      var array = [];
+    $scope.getLabels = function (startDate, endDate, interval, format) {
 
-      for (var i = 0, l = 50; i < l; i++) {
-        array.push(Math.round(Math.random() * 200))
-      }
-      return array;
-    }
-
-    $scope.getLabels = function () {
-
-      var dateArray = new Array();
-      var fromDate = $scope.fromDate;
-      var toDate = $scope.toDate;
-
-      while (fromDate <= toDate) {
-        dateArray.push( new Date(fromDate).toFormattedString())
-        fromDate = fromDate.addToDate();
-      }
+      var dateArray = $scope.getDates(startDate, endDate, interval, format);
       $scope.labels = dateArray;
     }
 
-
-
     $scope.setStartDates = function () {
-      $scope.fromDate = new Date();
-      $scope.fromDate.setDate($scope.fromDate.getDate() - 7)
-      $scope.toDate = new Date();
+      $scope.fromDate = new Date("04/03/2015");
+      $scope.toDate = new Date("04/29/2015");
     }
 
-    Date.prototype.addToDate = function() {
-      var date = new Date(this.valueOf())
-      if ($scope.interval[0].checked === true) {
-       date.setDate(date.getDate() + 1);
-      }
-      if ($scope.interval[1].checked === true) {
-        date.setMonth(date.getMonth() + 1);
-      }
-      if ($scope.interval[2].checked === true) {
-        date.setFullYear(date.getFullYear() + 1);
-      }
+    Date.prototype.addToDate = function(interval) {
+      var date = new Date(this.valueOf());
+      var set = "set" + interval;
+      var get = "get" + interval;
+
+      date[set](date[get]() + 1);
       return date;
     }
-
-    Date.prototype.toFormattedString = function () {
-      var string = []
-      if ($scope.interval[0].checked === true) {
-        string = [String(this.getDate()) + "-" +
-                  String(this.getMonth()) + "-" +
-                  String(this.getFullYear())];
-      }
-      if ($scope.interval[1].checked === true) {
-        string = [String(this.getMonth()) + "-" +
-                  String(this.getFullYear())];
-      }
-      if ($scope.interval[2].checked === true) {
-        string = [String(this.getFullYear())];
-      }
-      return string;
-    };
 
     $scope.switch = function (position, interval) {
       angular.forEach(interval, function(type, index) {
@@ -188,19 +161,40 @@ angular.module('DataDisplayPrototypeApp')
       });
     }
 
-    $scope.setArrays = function () {
-      randomArray1 = $scope.randomArray();
-      randomArray2 = $scope.randomArray();
-      randomArray3 = $scope.randomArray();
-      randomArray4 = $scope.randomArray();
-      randomArray5 = $scope.randomArray();
-      randomArray6 = $scope.randomArray();
-      randomArray7 = $scope.randomArray();
+    $scope.convertDate = function (date, format) {
+      var year = String(date.getFullYear())
+      var month = String(date.getMonth() + 1)
+      var day =  String(date.getDate())
+      var time = " 00:00:00"
+
+      var returnDate = year
+      + ( format[0] === true ? "-" + ("0" + month).slice(-2) : "")
+      + ( format[1] === true ? "-" + ("0" + day).slice(-2) : "")
+      + ( format[2] === true ? time : "")
+
+      return returnDate;
+    }
+
+    $scope.getDates = function (startDate, endDate, interval, format) {
+      var year;
+      var month;
+      var day;
+      var date;
+      var result = [];
+      var i = 0;
+
+      while (startDate <= endDate) {
+        date = $scope.convertDate(startDate, format)
+        result.push(date);
+
+        startDate = startDate.addToDate(interval);
+      }
+      return result;
     }
 
     $scope.getDifferences = function () {
 
-      $scope.dataDifferenceArray.length = 0;
+      $scope.dataDifferenceArray = [];
       var i;
       for (i = 0; i < $scope.allData.length ;i++) {
         $scope.dataDifferenceArray.push({
@@ -210,15 +204,12 @@ angular.module('DataDisplayPrototypeApp')
           differenceData : $scope.allData[i][$scope.labels.length-1] - $scope.allData[i][0]
         })
       }
-      console.log($scope.dataDifferenceArray)
     }
 
 
-
     $scope.setStartDates();
-    $scope.setArrays();
     $scope.buildChart();
   });
 
 
-/// word search!!
+

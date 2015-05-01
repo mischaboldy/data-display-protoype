@@ -1,15 +1,14 @@
-<div class="totals" ng-controller="SidebarController">
-  <h3>Totals</h3><br/>
-  <p>all users: {{totalUsers}} </p>
-  <p>all activeUsers: {{totalTennants}}</p>
-  <p>all tennants: {{totalSpaces}} </p>
-  <p>all completions: {{totalCompletions}} </p>
-  <p>all paths: {{totalPaths}} </p>
-  <p>all chapters: {{totalChapters}} </p><br/>
+<div class="totals">
+  <h3>Totals</h3>
+  <p>users: {{totalUsers}}<br/>
+  tennants: {{totalTennants}}<br/>
+  spaces: {{totalSpaces}}<br/>
+  completions: {{totalCompletions}}<br/>
+  chapters: {{totalChapters}} </p><br/>
 
-  <h3>Differences</h3><br/>
+  <h3>Differences</h3>
     <table class="tftable" border="1">
-      <tr><th>Data</th><th>Start date</th><th>End date</th><th>Difference</th></tr>
+      <tr><th>Data</th><th>{{convertDate(fromDate, [true, true, false])}}</th><th>{{convertDate(toDate, [true, true, false])}}</th><th>Difference</th></tr>
       <tr ng-repeat="data in dataDifferenceArray">
         <td>{{data.name}}</td>
         <td>{{data.startData}}</td>
@@ -61,7 +60,6 @@
   <input type="date" ng-model="toDate"></input></br>
   <button class="button" ng-click="buildChart()">show me the data</button><br/>
 </div>
-
 
 <div class="container">
   <chart type="{{charttype}}"></chart>
