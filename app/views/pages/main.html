@@ -1,13 +1,13 @@
 <div class="totals">
   <h3>Totals</h3>
   <p>users: {{totalUsers}}<br/>
-  tennants: {{totalTennants}}<br/>
+  tenants: {{totalTenants}}<br/>
   spaces: {{totalSpaces}}<br/>
   completions: {{totalCompletions}}<br/>
   chapters: {{totalChapters}} </p><br/>
 
   <h3>Differences</h3>
-    <table class="tftable" border="1">
+    <table ng-hide="difference" class="tftable" border="1">
       <tr><th>Data</th><th>{{convertDate(fromDate, [true, true, false])}}</th><th>{{convertDate(toDate, [true, true, false])}}</th><th>Difference</th></tr>
       <tr ng-repeat="data in dataDifferenceArray">
         <td>{{data.name}}</td>
@@ -16,6 +16,7 @@
         <td>{{data.differenceData}}</td>
       </tr>
     </table>
+    <p ng-show="difference"> no data to show</p>
 </div>
 
 <div class="options">
@@ -26,7 +27,7 @@
         <thead> select data: </thead>
         <tr ng-repeat="value in dataDisplayModel">
           <td>
-            <input type="checkbox" ng-model="value.checked"> {{value.name}}</input>
+            <input type="checkbox" ng-click="checkReady()" ng-model="value.checked" > {{value.name}}</input>
           </td>
         </tr>
       </table>
@@ -55,10 +56,11 @@
     </div>
   </div>
   from date:
-  <input type="date" ng-model="fromDate"></input><br/>
+  <input type="date" ng-change="checkReady()" ng-model="fromDate"></input><br/>
   to date:
-  <input type="date" ng-model="toDate"></input></br>
-  <button class="button" ng-click="buildChart()">show me the data</button><br/>
+  <input type="date" ng-change="checkReady()" ng-model="toDate"></input></br>
+  <button class="button" ng-disabled="readyToGo" ng-click="buildChart()">show me the data</button><br/>
+  <span id="info-text" ng-show="readyToGo">{{infoText}}</span>
 </div>
 
 <div class="container">

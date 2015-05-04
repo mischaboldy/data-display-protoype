@@ -93,7 +93,8 @@ body {
   background-color: rgba(79,235,40,0.2);
   float: right;
   margin-right: 20px;
-  height: auto;
+  height: 480px;
+  width: 320px;
   padding: 1em;
   border-radius: 5px;
 }
@@ -108,8 +109,8 @@ body {
   background-color: rgba(79,235,40,0.2);
   float: left;
   margin-right: 20px;
-  height: auto;
-  width: 315px;
+  height: 480px;
+  width: 320px;
   padding: 1em;
   border-radius: 5px;
 
@@ -126,7 +127,7 @@ body {
 
 .tftable {
   width:100%;
-
+  max-width: 720px;
   td {
     font-size:12px;
     padding: 8px;
@@ -145,4 +146,25 @@ body {
 
 .chart {
   max-width: 740px;
+}
+
+.table-button:hover {
+  border: 1px solid black;
+}
+
+#info-text {
+  font-size: 12px;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+.button:disabled {
+  border:none;
+  color: grey;
 }

@@ -3,7 +3,6 @@ angular.module('DataDisplayPrototypeApp')
   .controller('MainCtrl', function ($scope, dataService, $filter) {
 
     $scope.dataList = dataService.getData()
-
     console.log($scope.dataList)
 
 
@@ -19,7 +18,7 @@ angular.module('DataDisplayPrototypeApp')
       return total;
     }
 
-    $scope.getTennants = function () {
+    $scope.getTenants = function () {
       var i;
       var total = 0;
 
@@ -31,17 +30,22 @@ angular.module('DataDisplayPrototypeApp')
       return total;
     }
 
+    var storedChart;
+    var storedData;
+    var storedInterval;
     $scope.totalUsers = $scope.getTotals(1);
-    $scope.totalTennants = $scope.getTennants();
+    $scope.totalTenants = $scope.getTenants();
     $scope.totalSpaces = $scope.getTotals(2);
     $scope.totalCompletions = $scope.getTotals(3);
     $scope.totalChapters = $scope.getTotals(5);
-
+    $scope.readyToGo = false;
+    $scope.difference = false;
     $scope.charttype = "lineChart"
     $scope.labels = [];
     $scope.allData = [];
     $scope.series = [];
 
+    $scope.colors = ['#FD1F5E','#1EF9A1','#7FFD1F','#68F000'];
     $scope.dataDisplayModel = [{
         name : "users",
         field : "users",
@@ -101,12 +105,7 @@ angular.module('DataDisplayPrototypeApp')
     }
 
     $scope.getChart = function() {
-      if ($scope.chartstype[0].checked) {
-        $scope.charttype = $scope.chartstype[0].partial
-      }
-      if ($scope.chartstype[1].checked) {
-        $scope.charttype = $scope.chartstype[1].partial
-      }
+      $scope.charttype = _.find($scope.chartstype, {'checked' : true}).partial;
     }
 
     $scope.getData = function(startDate, endDate, interval, format) {
@@ -155,6 +154,7 @@ angular.module('DataDisplayPrototypeApp')
     }
 
     $scope.switch = function (position, interval) {
+      $scope.checkReady();
       angular.forEach(interval, function(type, index) {
         if (position != index)
           type.checked = false;
@@ -193,19 +193,77 @@ angular.module('DataDisplayPrototypeApp')
     }
 
     $scope.getDifferences = function () {
-
+      $scope.difference = false;
       $scope.dataDifferenceArray = [];
       var i;
       for (i = 0; i < $scope.allData.length ;i++) {
-        $scope.dataDifferenceArray.push({
-          name : $scope.series[i],
-          startData : $scope.allData[i][0],
-          endData : $scope.allData[i][$scope.labels.length-1],
-          differenceData : $scope.allData[i][$scope.labels.length-1] - $scope.allData[i][0]
-        })
+        if ( $scope.series[i] !== "active users") {
+          $scope.dataDifferenceArray.push({
+            name : $scope.series[i],
+            startData : $scope.allData[i][0],
+            endData : $scope.allData[i][$scope.labels.length-1],
+            differenceData : $scope.allData[i][$scope.labels.length-1] - $scope.allData[i][0]
+          })
+        }
       }
+
+      if ($scope.dataDifferenceArray.length === 0)
+        $scope.difference = true;
+
     }
 
+    $scope.showTable = function (label) {
+      storedChart = _.find($scope.chartstype, {'checked' : true})
+      storedData = $scope.dataDisplayModel;
+      storedInterval = $scope.interval;
+      if (storedChart !== undefined) {
+        storedChart.checked = false;
+      }
+      $scope.tableDifferences = [];
+      $scope.tableDifferencesPercentage = [];
+      $scope.tableData = $scope.allData[_.indexOf($scope.series, label)];
+      $scope.dataLabel = label;
+      $scope.charttype = 'table';
+
+      for (var i = 0 ; i < $scope.tableData.length ; i++) {
+        $scope.tableDifferences.push($scope.tableData[i] - $scope.tableData[i -1]);
+        $scope.tableDifferencesPercentage.push(Math.round(($scope.tableDifferences[i] / $scope.tableData[i]) * 1000) / 1000 + "%");
+
+      }
+
+      $scope.tableDifferences[0] = "not available";
+      $scope.tableDifferencesPercentage[0]= "not available";
+      $scope.checkReady();
+    }
+
+    $scope.checkReady = function () {
+      var type = _.find($scope.chartstype, {'checked' : true})
+      var interval =_.find($scope.interval, {'checked' : true})
+      var data =_.find($scope.dataDisplayModel, {'checked' : true})
+      var conditionA = (type === undefined || interval === undefined || data === undefined) ? true : false
+      var conditionB = ($scope.toDate < $scope.fromDate) ? true : false
+
+      if (conditionA || conditionB) {
+        $scope.readyToGo = true;
+        if (conditionA && conditionB)
+          $scope.infoText = "Select atleast one option in each column and select to date that is after from date";
+        else if (conditionA)
+          $scope.infoText = "Select atleast one option in each column";
+        else if (conditionB)
+          $scope.infoText = "Select to date that is after from date";
+
+      }
+      else
+        $scope.readyToGo = false;
+    }
+
+    $scope.backToChart = function () {
+      storedChart.checked = true;
+      $scope.buildChart();
+      $scope.dataDisplayModel = storedData;
+      $scope.interval = storedInterval;
+      $scope.checkReady();
+    }
 
     $scope.setStartDates();
     $scope.buildChart();
