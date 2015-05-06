@@ -3,7 +3,7 @@ angular.module('DataDisplayPrototypeApp')
   .controller('MainCtrl', function ($scope, dataService, $filter) {
 
     $scope.dataList = dataService.getData()
-    console.log($scope.dataList)
+    // console.log($scope.dataList)
 
 
     $scope.getTotals = function (key) {
@@ -30,9 +30,9 @@ angular.module('DataDisplayPrototypeApp')
       return total;
     }
 
-    var storedChart;
-    var storedData;
-    var storedInterval;
+    var storedChart = [];
+    var storedData = [];
+    var storedInterval = [];
     $scope.totalUsers = $scope.getTotals(1);
     $scope.totalTenants = $scope.getTenants();
     $scope.totalSpaces = $scope.getTotals(2);
@@ -213,12 +213,21 @@ angular.module('DataDisplayPrototypeApp')
     }
 
     $scope.showTable = function (label) {
-      storedChart = _.find($scope.chartstype, {'checked' : true})
-      storedData = $scope.dataDisplayModel;
-      storedInterval = $scope.interval;
-      if (storedChart !== undefined) {
-        storedChart.checked = false;
-      }
+      _.forEach($scope.chartstype, function (n, key) {
+        storedChart.push(n.checked)
+      });
+
+      _.forEach($scope.dataDisplayModel, function (n, key) {
+        storedData.push(n.checked)
+      });
+
+      _.forEach($scope.interval, function (n, key) {
+        storedInterval.push(n.checked)
+      });
+
+      $scope.chartstype[0].checked = false;
+      $scope.chartstype[1].checked = false;
+
       $scope.tableDifferences = [];
       $scope.tableDifferencesPercentage = [];
       $scope.tableData = $scope.allData[_.indexOf($scope.series, label)];
@@ -258,10 +267,20 @@ angular.module('DataDisplayPrototypeApp')
     }
 
     $scope.backToChart = function () {
-      storedChart.checked = true;
+
+    _.forEach($scope.chartstype, function (n, key) {
+      n.checked = storedChart[key]
+    })
+
+    _.forEach($scope.interval, function (n, key) {
+      n.checked = storedInterval[key]
+    })
+
+    _.forEach($scope.dataDisplayModel, function (n, key) {
+      n.checked = storedData[key]
+    })
+
       $scope.buildChart();
-      $scope.dataDisplayModel = storedData;
-      $scope.interval = storedInterval;
       $scope.checkReady();
     }
 
