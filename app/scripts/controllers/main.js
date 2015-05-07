@@ -1,43 +1,8 @@
 'use strict';
 angular.module('DataDisplayPrototypeApp')
-  .controller('MainCtrl', function ($scope, dataService, $filter) {
+  .controller('MainCtrl', function ($scope, dataService, $filter, dataModels) {
 
     $scope.dataList = dataService.getData()
-    // console.log($scope.dataList)
-
-
-    $scope.getTotals = function (key) {
-      var i;
-      var total = 0;
-
-      for (i = 0 ; i < $scope.dataList.values.length ; i++) {
-        if ($scope.dataList.values[i][6] === "2015-04-29 00:00:00") {
-          total += parseInt($scope.dataList.values[i][key])
-        }
-      }
-      return total;
-    }
-
-    $scope.getTenants = function () {
-      var i;
-      var total = 0;
-
-      for (i = 0 ; i < $scope.dataList.values.length ; i++) {
-        if ($scope.dataList.values[i][6] === "2015-04-29 00:00:00") {
-          total += 1
-        }
-      }
-      return total;
-    }
-
-    var storedChart = [];
-    var storedData = [];
-    var storedInterval = [];
-    $scope.totalUsers = $scope.getTotals(1);
-    $scope.totalTenants = $scope.getTenants();
-    $scope.totalSpaces = $scope.getTotals(2);
-    $scope.totalCompletions = $scope.getTotals(3);
-    $scope.totalChapters = $scope.getTotals(5);
     $scope.readyToGo = false;
     $scope.difference = false;
     $scope.charttype = "lineChart"
@@ -45,55 +10,11 @@ angular.module('DataDisplayPrototypeApp')
     $scope.allData = [];
     $scope.series = [];
 
-    $scope.colors = ['#FD1F5E','#1EF9A1','#7FFD1F','#68F000'];
-    $scope.dataDisplayModel = [{
-        name : "users",
-        field : "users",
-        checked : true
-      }, {
-        name : "active users",
-        field : "active_users",
-        checked : false
-      }, {
-        name : "completions",
-        field : "completions",
-        checked : false
-      }, {
-        name : "spaces",
-        field : "spaces",
-        checked : false
-      }, {
-        name : "chapters",
-        field : "chapters",
-        checked : false
-    }];
+    $scope.colors = ["#97BBCD", "#DCDCDC", "#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"];
+    $scope.dataDisplayModel = dataModels.getDataModel();
+    $scope.interval = dataModels.getInterval();
+    $scope.chartstype = dataModels.getType();
 
-    $scope.interval = [{
-        name : "day",
-        action : "Date",
-        format : [true, true, false],
-        checked : true
-      }, {
-        name : "month",
-        action : "Month",
-        format : [true, false, false],
-        checked : false
-      }, {
-        name : "year",
-        action : "FullYear",
-        format : [false, false, false],
-        checked : false
-    }];
-
-    $scope.chartstype = [{
-        name : 'line chart',
-        partial : 'lineChart',
-        checked : true
-      }, {
-        name : 'bar chart',
-        partial : 'barChart',
-        checked : false
-      }];
 
     $scope.buildChart = function () {
       var interval = _.result(_.find($scope.interval, { 'checked' : true }) , 'action')
@@ -110,8 +31,8 @@ angular.module('DataDisplayPrototypeApp')
 
     $scope.getData = function(startDate, endDate, interval, format) {
 
-      $scope.series.length = 0
-      $scope.allData.length = 0
+      $scope.series = [];
+      $scope.allData = [];
 
       var dateArray = $scope.getDates(startDate, endDate, interval, format);
 
@@ -129,6 +50,9 @@ angular.module('DataDisplayPrototypeApp')
           }
           $scope.allData.push(dataArray);
           $scope.series.push($scope.dataDisplayModel[i].name);
+
+          dataService.setAllData($scope.allData);
+          dataService.setSeries($scope.series);
         }
       }
     }
@@ -137,6 +61,7 @@ angular.module('DataDisplayPrototypeApp')
 
       var dateArray = $scope.getDates(startDate, endDate, interval, format);
       $scope.labels = dateArray;
+      dataService.setLabels($scope.labels);
     }
 
     $scope.setStartDates = function () {
@@ -209,41 +134,8 @@ angular.module('DataDisplayPrototypeApp')
 
       if ($scope.dataDifferenceArray.length === 0)
         $scope.difference = true;
-
     }
 
-    $scope.showTable = function (label) {
-      _.forEach($scope.chartstype, function (n, key) {
-        storedChart.push(n.checked)
-      });
-
-      _.forEach($scope.dataDisplayModel, function (n, key) {
-        storedData.push(n.checked)
-      });
-
-      _.forEach($scope.interval, function (n, key) {
-        storedInterval.push(n.checked)
-      });
-
-      $scope.chartstype[0].checked = false;
-      $scope.chartstype[1].checked = false;
-
-      $scope.tableDifferences = [];
-      $scope.tableDifferencesPercentage = [];
-      $scope.tableData = $scope.allData[_.indexOf($scope.series, label)];
-      $scope.dataLabel = label;
-      $scope.charttype = 'table';
-
-      for (var i = 0 ; i < $scope.tableData.length ; i++) {
-        $scope.tableDifferences.push($scope.tableData[i] - $scope.tableData[i -1]);
-        $scope.tableDifferencesPercentage.push(Math.round(($scope.tableDifferences[i] / $scope.tableData[i]) * 1000) / 1000 + "%");
-
-      }
-
-      $scope.tableDifferences[0] = "not available";
-      $scope.tableDifferencesPercentage[0]= "not available";
-      $scope.checkReady();
-    }
 
     $scope.checkReady = function () {
       var type = _.find($scope.chartstype, {'checked' : true})
@@ -260,28 +152,9 @@ angular.module('DataDisplayPrototypeApp')
           $scope.infoText = "Select atleast one option in each column";
         else if (conditionB)
           $scope.infoText = "Select to date that is after from date";
-
       }
       else
         $scope.readyToGo = false;
-    }
-
-    $scope.backToChart = function () {
-
-    _.forEach($scope.chartstype, function (n, key) {
-      n.checked = storedChart[key]
-    })
-
-    _.forEach($scope.interval, function (n, key) {
-      n.checked = storedInterval[key]
-    })
-
-    _.forEach($scope.dataDisplayModel, function (n, key) {
-      n.checked = storedData[key]
-    })
-
-      $scope.buildChart();
-      $scope.checkReady();
     }
 
     $scope.setStartDates();

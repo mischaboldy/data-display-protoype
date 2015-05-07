@@ -1,14 +1,1 @@
-<div class="totals" ng-controller="SidebarController"> <h3>Totals</h3><br> <p>all users: {{totalUsers}} </p> <p>all activeUsers: {{totalTenants}}</p> <p>all tenants: {{totalSpaces}} </p> <p>all completions: {{totalCompletions}} </p> <p>all paths: {{totalPaths}} </p> <p>all chapters: {{totalChapters}} </p><br> <!-- <div ng-controller="MainCtrl"> --> <h3>Differences</h3><br> <!-- <table>
-      <tr>
-        <th>
-            start date
-        </th>
-        <th>
-            end date
-        </th>
-        <th>
-            difference
-        </th>
-      </tr>
-
-    </table> --> <!-- </div> --> </div>
+<div ng-hide="infoPage.show" class="totals" ng-controller="RightSidebarController"> <h3>Totals</h3> <p>users: {{totalUsers}}<br> tenants: {{totalTenants}}<br> spaces: {{totalSpaces}}<br> completions: {{totalCompletions}}<br> chapters: {{totalChapters}} </p><br> <h3>Differences</h3> <table ng-hide="difference" class="tftable" border="1"> <tr><th>Data<th>{{convertDate(fromDate, [true, true, false])}}<th>{{convertDate(toDate, [true, true, false])}}<th>Difference <tr ng-repeat="data in dataDifferenceArray"> <td>{{data.name}} <td>{{data.startData}} <td>{{data.endData}} <td>{{data.differenceData}}  </table> <p ng-show="difference"> no data to show</p> </div>

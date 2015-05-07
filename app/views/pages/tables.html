@@ -1,0 +1,26 @@
+<div class="options">
+  <br/><a href="/">Back to chart</a><br/>
+  show top <input class="input-number" type="number" ng-model="tenantAmount" placeholder="tenantAmount" ng-Change="getTenantData()"></input> tenants with most users
+</div>
+
+<div class="pieClass">
+  top {{tenantAmount}} tenants with most users:
+  <canvas id="pie" class="chart chart-pie" data="tenantData"
+  labels="tenantLabels" legend="true"></canvas>
+</div>
+
+<table class="tftable" border="1">
+  <tr>
+    <th>date</th>
+    <th>{{dataLabel}}</th>
+    <th>difference</th>
+    <th>percentual</th>
+  </tr>
+  <tr ng-repeat="dates in labels">
+
+    <td>{{dates}}</td>
+    <td>{{tableData[$index]}}</td>
+    <td class="green">{{tableDifferences[$index]}}</td>
+    <td class="green">{{tableDifferencesPercentage[$index]}}</td>
+  </tr>
+</table>

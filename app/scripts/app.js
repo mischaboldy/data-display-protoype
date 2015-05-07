@@ -5,7 +5,7 @@ angular.module('DataDisplayPrototypeApp', [
     'ngRoute',
     'chart.js'
   ])
-  .config(function ($routeProvider) {
+  .config(function ($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/pages/main.html',
@@ -23,23 +23,18 @@ angular.module('DataDisplayPrototypeApp', [
         templateUrl: 'views/pages/search.html',
         controller: 'SearchController'
       })
-      .when('/users', {
-        templateUrl: 'views/pages/users.html',
-        controller: 'usersController'
-      })
-      .when('/tenants', {
-        templateUrl: 'views/pages/tenants.html',
-        controller: 'tenantsController'
-      })
-      .when('/spaces', {
-        templateUrl: 'views/pages/spaces.html',
-        controller: 'spacesController'
+      .when('/tables/:name', {
+        templateUrl: 'views/pages/tables.html',
+        controller: 'TablesController'
       })
       .when('/projections', {
         templateUrl: 'views/pages/projections.html',
-        controller: 'projectionsController'
+        controller: 'ProjectionsController'
       })
       .otherwise({
         redirectTo: '/'
       });
+
+      // use the HTML5 History API
+      $locationProvider.html5Mode(true);
   });
