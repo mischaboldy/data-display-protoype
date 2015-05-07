@@ -1,13 +1,12 @@
-<div class="options">
-  <br/><a href="/">Back to chart</a><br/>
-  show top <input class="input-number" type="number" ng-model="tenantAmount" placeholder="tenantAmount" ng-Change="getTenantData()"></input> tenants with most users
+<div class="table-options">
+  <a href="/">Back to chart</a><br/><br/>
+  Show the <input class="input-number" type="number" ng-model="tenantAmount" placeholder="tenantAmount" ng-Change="getTenantData()"></input> tenants with most users
 </div>
 
 <div class="pieClass">
-  top {{tenantAmount}} tenants with most users:
-  <canvas id="pie" class="chart chart-pie" data="tenantData"
-  labels="tenantLabels" legend="true"></canvas>
+  <chart type="{{tableName}}"></chart>
 </div>
+
 
 <table class="tftable" border="1">
   <tr>
