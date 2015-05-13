@@ -1,1 +1,37 @@
-<chart type="generalTable"></chart>
+<div ng-show="generalDataDisplay">
+  The average user has created {{avgSpaces}} spaces, completed {{avgCompletions}} chapters and has {{avgPoints}} points (points = MOCK)
+
+  <chart type="generalTable"></chart>
+  Average login period: 1 hour, 27 minutes (MOCK)
+
+  <canvas id="pie" class="chart chart-line" options="loginOptions" data="loginData" series="loginSeries" labels="loginLabels" legend="true"></canvas>
+</div>
+
+<div ng-hide="generalDataDisplay">
+  <table class="tftable" border="1">
+    <tr>
+      <th></th>
+      <th>{{ddSelectSelected.text}}</th>
+      <th ng-show="compareDataDisplay"> {{ddSelectSelectedCompare.text}}</th>
+      <th>Overall averages</th>
+    </tr>
+    <tr>
+      <td>Avarage completions per user:</td>
+      <td>{{tenantStats[0].avgCompletions}}</td>
+      <td ng-show="compareDataDisplay">{{tenantStats[1].avgCompletions}}</td>
+      <td>{{avgCompletions}}</td>
+    </tr>
+    <tr>
+      <td>Avarage spaces created per user:</td>
+      <td>{{tenantStats[0].avgSpaces}}</td>
+      <td ng-show="compareDataDisplay">{{tenantStats[1].avgSpaces}}</td>
+      <td>{{avgSpaces}}</td>
+    </tr>
+    <tr>
+      <td>Avarage chapters created per user:</td>
+      <td>{{tenantStats[0].avgChapters}}</td>
+      <td ng-show="compareDataDisplay">{{tenantStats[1].avgChapters}}</td>
+      <td>{{avgChapters}}</td>
+    </tr>
+  </table>
+<div>

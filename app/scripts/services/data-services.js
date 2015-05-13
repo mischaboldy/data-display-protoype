@@ -27,9 +27,14 @@ angular.module('DataDisplayPrototypeApp')
 
   })
   .factory ('dataService', function() {
-    var allData = []
-    var series = []
-    var label = []
+    var allData = [];
+    var series = [];
+    var label = [];
+
+    var totalUsers = [];
+    var totalSpaces = [];
+    var totalChapters = [];
+    var totalCompletions = [];
 
     return {
       getData: function() {
@@ -40,7 +45,15 @@ angular.module('DataDisplayPrototypeApp')
       getSeries: function () { return series },
       setSeries: function ( value ) {series = value},
       getLabels: function () { return label },
-      setLabels: function ( value ) {label = value}
+      setLabels: function ( value ) {label = value},
+      setTotalUsers: function ( value ) {totalUsers = value},
+      getTotalUsers: function () { return totalUsers },
+      setTotalSpaces: function ( value ) {totalSpaces = value},
+      getTotalSpaces: function () { return totalSpaces },
+      setTotalChapters: function ( value ) {totalChapters = value},
+      getTotalChapters: function () { return totalChapters },
+      setTotalCompletions: function ( value ) {totalCompletions = value},
+      getTotalCompletions: function () { return totalCompletions }
     };
   }).service ('dataModels', function() {
     return {

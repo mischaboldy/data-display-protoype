@@ -3,7 +3,8 @@ angular.module('DataDisplayPrototypeApp', [
     'ngAnimate',
     'ngResource',
     'ngRoute',
-    'chart.js'
+    'chart.js',
+    'ngDropdowns'
   ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider

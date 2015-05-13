@@ -15,7 +15,6 @@ angular.module('DataDisplayPrototypeApp')
     $scope.interval = dataModels.getInterval();
     $scope.chartstype = dataModels.getType();
 
-
     $scope.buildChart = function () {
       var interval = _.result(_.find($scope.interval, { 'checked' : true }) , 'action')
       var format = _.result(_.find($scope.interval, { 'checked' : true }) , 'format')

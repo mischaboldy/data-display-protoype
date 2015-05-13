@@ -1,6 +1,23 @@
 <div class="table-options">
   <a href="/">Back to chart</a><br/><br/>
-  Show the <input class="input-number" type="number" ng-model="tenantAmount" placeholder="tenantAmount" ng-Change="getTenantData()"></input> tenants with most users
+
+  <span ng-show="generalDataDisplay"> Show the <input class="input-number" type="number" ng-model="tenantAmount" placeholder="tenantAmount" ng-Change="getTenantData()"></input> tenants with most users<br/></span>
+
+  <p>Select a tenant to view data from:</p>
+  <div dropdown-select="ddSelectOptions"
+      dropdown-model="ddSelectSelected"
+      dropdown-item-label="text" >
+  </div>
+
+
+
+  <span ng-hide="generalDataDisplay"><p>compare too:</p>
+  <div dropdown-select="ddSelectOptions"
+      dropdown-model="ddSelectSelectedCompare"
+      dropdown-item-label="text" >
+  </div></span>
+
+  <button ng-hide="generalDataDisplay" ng-click="showGeneralData()">back to general data</button>
 </div>
 
 <div class="pieClass">
@@ -8,7 +25,7 @@
 </div>
 
 
-<table class="tftable" border="1">
+<table ng-show="generalDataDisplay" class="tftable" border="1">
   <tr>
     <th>date</th>
     <th>{{dataLabel}}</th>

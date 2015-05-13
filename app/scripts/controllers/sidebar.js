@@ -26,10 +26,17 @@ angular.module('DataDisplayPrototypeApp')
       return total;
     }
 
+
+
     $scope.totalUsers = $scope.getTotals(1);
     $scope.totalTenants = $scope.getTenants();
     $scope.totalSpaces = $scope.getTotals(2);
     $scope.totalCompletions = $scope.getTotals(3);
     $scope.totalChapters = $scope.getTotals(5);
+
+    dataService.setTotalUsers($scope.totalUsers);
+    dataService.setTotalSpaces($scope.totalSpaces);
+    dataService.setTotalChapters($scope.totalChapters);
+    dataService.setTotalCompletions($scope.totalCompletions);
   });
 
