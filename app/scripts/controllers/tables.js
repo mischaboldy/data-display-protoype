@@ -3,6 +3,7 @@ angular.module('DataDisplayPrototypeApp')
 
     var placeHolder = "select tenant"
     $scope.tenantAmount = 10;
+    $scope.spacesAmount = 10;
     $scope.allData = dataService.getAllData();
     $scope.series = dataService.getSeries();
     $scope.labels = dataService.getLabels();
@@ -10,7 +11,11 @@ angular.module('DataDisplayPrototypeApp')
     $scope.tableName = $routeParams.name;
     $scope.generalDataDisplay = true;
     $scope.compareDataDisplay = false;
+    $scope.spacesDataDisplay = false;
 
+    if ($routeParams.name === "spaces") {
+      $scope.spacesDataDisplay = true;
+    }
 
     $scope.loginData = [[
     0, 0, 2, 2, 3, 4, 6, 7, 8, 10, 11, 9, 7, 5, 3, 6, 4, 5, 3, 2, 2, 1, 0, 0]];
@@ -24,6 +29,7 @@ angular.module('DataDisplayPrototypeApp')
       "20:00 - 21:00", "21:00 - 22:00", "22:00 - 23:00", "23:00 - 00:00"
     ];
     $scope.loginSeries = ["logins in percentages"]
+    $scope.SpacesSeries = ["Space creations in percentages"]
 
     $scope.loginOptions = {
       scaleLabel: function (valuePayload) {
@@ -39,7 +45,9 @@ angular.module('DataDisplayPrototypeApp')
 
     $scope.avgSpaces = Math.round((totalUsers / totalSpaces) * 100) / 100;
     $scope.avgChapters = Math.round((totalUsers / totalChapters) * 100) / 100;
+    $scope.avgChaptersTotal = Math.round((totalChapters / totalSpaces) * 100) / 100;
     $scope.avgCompletions = Math.round((totalUsers / totalCompletions) * 100) / 100;
+    $scope.avgCompletionsTotal = Math.round((totalCompletions / totalSpaces) * 100) / 100;
     $scope.avgPoints = 45;
 
     $scope.showTable = function () {
@@ -106,10 +114,28 @@ angular.module('DataDisplayPrototypeApp')
       $scope.tenantLabels = tenants;
     }
 
+    $scope.getSpacesData = function () {
+      var spaces = []
+      var values = []
+      for (var j = 0; j < $scope.spacesAmount ; j++) {
+          var tempValue = Math.floor(Math.random()*100);
+          spaces.push("Space x")
+          values.push(tempValue)
+      }
+      userSum = 320;
+
+      spaces.push('other spaces');
+      values.push(userSum)
+
+      $scope.spacesData = values;
+      $scope.spacesLabels = spaces;
+    }
+
     $scope.showGeneralData = function () {
       $scope.ddSelectSelected.text = placeHolder;
       $scope.ddSelectSelectedCompare.text = placeHolder;
       $scope.compareDataDisplay = false;
+      $scope.spacesDataDisplay = true;
     }
 
     $scope.getSingleData = function () {
@@ -123,13 +149,16 @@ angular.module('DataDisplayPrototypeApp')
           avCompletions = Math.round( ($scope.dataList.values[i][3] / $scope.dataList.values[i][1]) *100 ) / 100 ;
           avChapters = Math.round( ($scope.dataList.values[i][5] / $scope.dataList.values[i][1]) *100 ) / 100 ;
           avSpaces = Math.round( ($scope.dataList.values[i][2] / $scope.dataList.values[i][1]) *100 ) / 100 ;
-
+          totSpaces = $scope.dataList.values[i][2];
+          avChapterPSpace = Math.round( ($scope.dataList.values[i][5] / $scope.dataList.values[i][2]) *100 ) / 100 ;
           $scope.tenantInfo.push({
             name : $scope.dataList.values[i][0],
             avgCompletions : avCompletions,
             avgPoints : randomNr,
             avgChapters : avChapters,
-            avgSpaces : avSpaces
+            avgSpaces : avSpaces,
+            totSpaces : totSpaces,
+            avChapterPSpace : avChapterPSpace
           })
         }
       }
@@ -157,6 +186,7 @@ angular.module('DataDisplayPrototypeApp')
     $scope.ddSelectSelected = { text : placeHolder}; // Must be an object
     $scope.ddSelectSelectedCompare = { text : placeHolder};
     $scope.getSingleData();
+    $scope.getSpacesData();
 
     $scope.$watch("ddSelectSelected", function(newVal){
       if (newVal.text === placeHolder)
@@ -164,6 +194,7 @@ angular.module('DataDisplayPrototypeApp')
       else {
         $scope.generalDataDisplay = false;
         $scope.showSingleData();
+        $scope.spacesDataDisplay = false;
       }
     },true);
 

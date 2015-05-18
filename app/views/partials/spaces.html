@@ -1,1 +1,46 @@
-<chart type="generalTable"></chart>
+<div ng-show="generalDataDisplay">
+  The average user has created {{avgSpaces}} spaces.<br/>
+  The average space has {{avgChaptersTotal}} chapters.<br/>
+  The average space has been completed {{avgCompletionsTotal}} times.<br/>
+
+  <chart type="generalTable"></chart>
+  When are spaces created (MOCK):
+
+  <canvas id="pie" class="chart chart-line" options="loginOptions" data="loginData" series="SpacesSeries" labels="loginLabels" legend="true"></canvas><br/>
+
+  The {{spacesAmount}} most popular spaces (MOCK):
+
+  <canvas id="pie" class="chart chart-pie" data="spacesData" labels="spacesLabels" legend="true"></canvas><br/>
+  * points are calculated by the following sum:
+  (follows of a space + completions of a space) / (total follows + total completions)
+
+</div>
+
+<div ng-hide="generalDataDisplay">
+  <table class="tftable" border="1">
+    <tr>
+      <th></th>
+      <th>{{ddSelectSelected.text}}</th>
+      <th ng-show="compareDataDisplay"> {{ddSelectSelectedCompare.text}}</th>
+      <th>Average</th>
+    </tr>
+    <tr>
+      <td>Spaces:</td>
+      <td>{{tenantStats[0].totSpaces}}</td>
+      <td ng-show="compareDataDisplay">{{tenantStats[1].totSpaces}}</td>
+      <td>{{avgSpaces}}</td>
+    </tr>
+    <tr>
+      <td>Average Completions per space:</td>
+      <td>{{tenantStats[0].avgCompletions}}</td>
+      <td ng-show="compareDataDisplay">{{tenantStats[1].avgCompletions}}</td>
+      <td>{{avgCompletions}}</td>
+    </tr>
+    <tr>
+      <td>Avarage Chapters per Space:</td>
+      <td>{{tenantStats[0].avChapterPSpace}}</td>
+      <td ng-show="compareDataDisplay">{{tenantStats[1].avChapterPSpace}}</td>
+      <td>{{avgChapters}}</td>
+    </tr>
+  </table>
+<div>

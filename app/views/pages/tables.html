@@ -3,6 +3,9 @@
 
   <span ng-show="generalDataDisplay"> Show the <input class="input-number" type="number" ng-model="tenantAmount" placeholder="tenantAmount" ng-Change="getTenantData()"></input> tenants with most users<br/></span>
 
+  <span ng-show="spacesDataDisplay"> Show the <input class="input-number" type="number" ng-model="spacesAmount" placeholder="spacesAmount" ng-Change="getSpacesData()"></input> most popular spaces<br/></span>
+
+
   <p>Select a tenant to view data from:</p>
   <div dropdown-select="ddSelectOptions"
       dropdown-model="ddSelectSelected"

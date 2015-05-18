@@ -73,7 +73,7 @@ angular.module('DataDisplayPrototypeApp')
           }, {
             name : "spaces",
             field : "spaces",
-            checked : false
+            checked : true
           }, {
             name : "chapters",
             field : "chapters",

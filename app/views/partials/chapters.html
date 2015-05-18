@@ -1,1 +1,20 @@
-<chart type="generalTable"></chart>
+<div ng-show="generalDataDisplay">
+  <chart type="generalTable"></chart>
+</div>
+
+<div ng-hide="generalDataDisplay">
+  <table class="tftable" border="1">
+    <tr>
+      <th></th>
+      <th>{{ddSelectSelected.text}}</th>
+      <th ng-show="compareDataDisplay"> {{ddSelectSelectedCompare.text}}</th>
+      <th>Overall averages</th>
+    </tr>
+    <tr>
+      <td>completions:</td>
+      <td>{{tenantStats[0].avgCompletions}}</td>
+      <td ng-show="compareDataDisplay">{{tenantStats[1].avgCompletions}}</td>
+      <td>{{avgCompletions}}</td>
+    </tr>
+  </table>
+<div>
