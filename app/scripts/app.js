@@ -4,7 +4,8 @@ angular.module('DataDisplayPrototypeApp', [
     'ngResource',
     'ngRoute',
     'chart.js',
-    'ngDropdowns'
+    'ngDropdowns',
+    'nvd3ChartDirectives'
   ])
   .config(function ($routeProvider, $locationProvider) {
     $routeProvider

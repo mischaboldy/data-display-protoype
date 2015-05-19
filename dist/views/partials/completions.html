@@ -1,1 +1,1 @@
-<chart type="generalTable"></chart>
+<div ng-show="generalDataDisplay"> <chart type="generalTable"></chart> </div> <div ng-hide="generalDataDisplay"> MOCK <table class="tftable" border="1"> <tr> <th> <th>{{ddSelectSelected.text}} <th ng-show="compareDataDisplay"> {{ddSelectSelectedCompare.text}} <th>Overall averages  <tr> <td>completions: <td>{{tenantStats[0].avgCompletions}} <td ng-show="compareDataDisplay">{{tenantStats[1].avgCompletions}} <td>{{avgCompletions}}  </table> <div></div></div>
