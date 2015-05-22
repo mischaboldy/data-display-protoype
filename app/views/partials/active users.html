@@ -1,1 +1,25 @@
-test
+<div ng-show="generalDataDisplay">
+  total active users:
+
+  <canvas  id="line" class="chart chart-line" data="activeUserData"
+    labels="activeUserlabels">
+  </canvas>
+</div>
+
+<div ng-hide="generalDataDisplay">
+  active users for {{ddSelectSelected.text}}
+
+  (MOCK)
+  <canvas  id="line" class="chart chart-line" data="activeUserData"
+    labels="activeUserlabels">
+  </canvas>
+
+  <div ng-show="compareDataDisplay">
+    active users for {{ddSelectSelectedCompare.text}}
+
+    (MOCK)
+    <canvas  id="line" class="chart chart-line" data="activeUserData"
+    labels="activeUserlabels">
+    </canvas>
+  </div>
+</div>

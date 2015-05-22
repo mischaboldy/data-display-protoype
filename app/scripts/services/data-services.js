@@ -65,11 +65,11 @@ angular.module('DataDisplayPrototypeApp')
           }, {
             name : "active users",
             field : "active_users",
-            checked : false
+            checked : true
           }, {
             name : "completions",
             field : "completions",
-            checked : false
+            checked : true
           }, {
             name : "spaces",
             field : "spaces",
@@ -77,7 +77,7 @@ angular.module('DataDisplayPrototypeApp')
           }, {
             name : "chapters",
             field : "chapters",
-            checked : false
+            checked : true
         }]
       },
       getInterval: function(){

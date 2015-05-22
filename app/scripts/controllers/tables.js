@@ -1,3 +1,4 @@
+'use strict';
 angular.module('DataDisplayPrototypeApp')
   .controller('TablesController', function ($scope, dataModels, $filter, dataService, $routeParams) {
 
@@ -12,9 +13,14 @@ angular.module('DataDisplayPrototypeApp')
     $scope.generalDataDisplay = true;
     $scope.compareDataDisplay = false;
     $scope.spacesDataDisplay = false;
+    $scope.activeUsers = false
 
     if ($routeParams.name === "spaces") {
       $scope.spacesDataDisplay = true;
+    }
+
+    if ($routeParams.name === "active users") {
+      $scope.activeUsers = true;
     }
 
     $scope.loginData = [[
@@ -37,6 +43,10 @@ angular.module('DataDisplayPrototypeApp')
 
       }
     };
+
+
+
+
 
     var totalUsers = dataService.getTotalUsers();
     var totalSpaces = dataService.getTotalSpaces();
@@ -122,7 +132,7 @@ angular.module('DataDisplayPrototypeApp')
           spaces.push("Space x")
           values.push(tempValue)
       }
-      userSum = 320;
+      var userSum = 320;
 
       spaces.push('other spaces');
       values.push(userSum)
@@ -131,11 +141,19 @@ angular.module('DataDisplayPrototypeApp')
       $scope.spacesLabels = spaces;
     }
 
+    $scope.getActiveUserData = function () {
+      $scope.activeUserData = [$scope.allData[1]];
+      $scope.activeUserlabels = $scope.labels;
+      $scope.activeUserSeries = $scope.series[1];
+    }
+
     $scope.showGeneralData = function () {
       $scope.ddSelectSelected.text = placeHolder;
       $scope.ddSelectSelectedCompare.text = placeHolder;
       $scope.compareDataDisplay = false;
-      $scope.spacesDataDisplay = true;
+      if ($routeParams.name === "spaces") {
+        $scope.spacesDataDisplay = true;
+      }
     }
 
     $scope.getSingleData = function () {
@@ -143,6 +161,8 @@ angular.module('DataDisplayPrototypeApp')
       var avCompletions;
       var avChapters;
       var avSpaces;
+      var totSpaces;
+      var avChapterPSpace;
       var randomNr = 2;
       for (var i = 0; i < $scope.dataList.values.length ; i++) {
         if ($scope.dataList.values[i][6] === "2015-04-29 00:00:00") {
@@ -187,6 +207,7 @@ angular.module('DataDisplayPrototypeApp')
     $scope.ddSelectSelectedCompare = { text : placeHolder};
     $scope.getSingleData();
     $scope.getSpacesData();
+    $scope.getActiveUserData();
 
     $scope.$watch("ddSelectSelected", function(newVal){
       if (newVal.text === placeHolder)

@@ -1,3 +1,4 @@
+'use strict';
 angular.module('DataDisplayPrototypeApp')
   .controller('RightSidebarController', function ($scope, dataService, dataModels) {
     $scope.dataList = dataService.getData();
